@@ -1,0 +1,242 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+  border-radius: 5px;
+  
+}
+input {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #3aae7e;
+  outline: none;
+}
+/* Navigation menu */
+.navbar header {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 5px 10px;
+  background-color: #d2d7ff;
+}
+#navToggle {
+  position: relative;
+  display: inline-block;
+}
+#toggleBtn {
+  border: none;
+  font-size: 20px;
+  background-color: transparent;
+  cursor: pointer;
+}
+.sidepanel {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  left: -10px;
+  width: 100vw;
+  max-width: 180px;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: black;
+  
+}
+.sidepanel a{
+  display: block;
+  text-decoration: none;
+  color: white;
+  margin: 0 20px 10px 0;
+  padding: 10px;
+}
+.sidepanel a:active {
+  background-color: white;
+  color: black;
+  
+}
+#logo {
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 10px;
+}
+#navRight {
+  margin-left: auto;
+  position: relative;
+}
+
+/* Authentication */
+#backdrop, #backdrop2 {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #cacaca86;
+  width: 100vw;
+  height: 100vh;
+  cursor: crosshair;
+  z-index: 2;
+}
+#authpopup {
+  display: none;
+}
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  min-width: 250px;
+  max-width: 800px;
+  padding: 20px;
+  background-color: white;
+  width: fit-content;
+  z-index: 3;
+}
+.popup button {
+  width: 100%;
+  margin-top: 10px;
+}
+.popup span {
+  cursor: pointer;
+  color: blue;
+}
+#uidInstruction, #pwdInstruction1, #pwdInstruction2 {
+  color: black;
+}
+.msgField {
+  display: none;
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: calc(100% - 10px);
+  padding: 10px;
+  text-align: center;
+  border:2px solid rgb(255, 149, 167);
+  background-color: rgb(255, 218, 224);
+  color: rgb(251, 13, 52);
+  z-index: 3;
+}
+.passchange, #splPassword {
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0);
+  max-width: 600px;
+}
+.passchange label {
+  display: block;
+}
+.passchange button, #splPassword button {
+  margin-top: 10px;
+  width: 100%;
+}
+#changePass {
+  display: none;
+}
+
+/* Page content */
+.content {
+  position: relative;
+  width: 100%;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #dddddd;
+  
+}
+.home {
+  font-size: 20px;
+  text-align: center;
+  padding: 60px;
+}
+.explore {
+  text-align: center;
+}
+ul {
+  padding-left: 0;
+  list-style-type: none;
+}
+#categoryList {
+  columns: 3 300px;
+}
+#categoryList li{
+  padding: 10px 0;
+  margin-bottom: 10px;
+  background-image: linear-gradient(45deg, rgb(137, 187, 91), rgb(57, 198, 174));
+  cursor: pointer;
+}
+#exploreBtn {
+  border: none;
+  margin-top: 20px;
+  padding: 10px 30px;
+  background-color: #3A85AE;
+  
+  font-size: 20px;
+}
+button {
+  border: none;
+  
+  padding: 10px;
+  background-color: #3aae7e;
+  color: white;
+  cursor: pointer;
+}
+
+/* Album view */
+.gallery .images {
+  gap: 10px;
+  columns: 5 340px;
+}
+.images img{
+  width: 100%;
+  /* margin-bottom: 10px; */
+}
+.card {
+  position: relative;
+}
+.card a img{
+  padding: 5px;
+  margin-bottom: -5px;
+  background-color: white;
+  width: 30px;
+  cursor: pointer;
+}
+.imgBtns {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  height: 30px;
+}
+#uploadpopup {
+  display: none;
+  position: relative;
+  z-index: 2;
+}
+#categorySelect li {
+  list-style-type: none;
+  display: inline-flex;
+  margin: 5px;
+  padding: 0 5px;
+  background-color: rgb(101, 224, 136);
+  border: 1px solid rgb(50, 205, 94);
+  cursor: pointer;
+}
+#categorySelect li input {
+  position: relative;
+  bottom: 2px;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) {
+  body {
+    margin: 0;
+  }
+  div, header {
+    border-radius: 0;
+  }
+}
