@@ -1,6 +1,6 @@
+import { useState } from 'react';
 import AlbumView from "./albumView";
 import Authentication from "./authentication";
-import { useState } from 'react';
 var cryptoJS = require('crypto-js');
 
 const MyGallery = ({isSignedIn, authCred}) => {
@@ -8,14 +8,16 @@ const MyGallery = ({isSignedIn, authCred}) => {
     var splPass = '';
     var [verified, setVerified] = useState(false);
     var [imageList, setImageList] = useState(null);
+    var userInfo;
     if(isSignedIn) {
-        var bytes = cryptoJS.AES.decrypt(authCred, 'GiveMeJob');
-        authCred = bytes.toString(cryptoJS.enc.Utf8);
-        authCred = JSON.parse(authCred);
-        userID = authCred['uid'];
-        if(authCred['splPass']) {
-            splPass = authCred['splPass'];
+        var bytesString = cryptoJS.AES.decrypt(authCred, 'GiveMeJob').toString(cryptoJS.enc.Utf8);
+        userInfo = JSON.parse(bytesString);
+        userID = userInfo['uid'];
+        if(userInfo['splPass']) {
+            splPass = userInfo['splPass'];
         }
+    } else {
+        window.location = '/';
     }
 
     function showMessage(message) {
@@ -68,42 +70,49 @@ const MyGallery = ({isSignedIn, authCred}) => {
             body: JSON.stringify(data)
         })
         if(response.ok) {
-            authCred['splPass'] = document.getElementById('splPass').value;
-            sessionStorage.setItem('Credentials', cryptoJS.AES.encrypt(JSON.stringify(authCred), 'GiveMeJob').toString());
+            userInfo['splPass'] = document.getElementById('splPass').value;
+            sessionStorage.setItem('Credentials', cryptoJS.AES.encrypt(JSON.stringify(userInfo), 'GiveMeJob').toString());
             window.location.reload();
         }
     }
     return (
         <div className="content">
-            { !verified && <div className="verification">
+            { verified ?
+                <AlbumView userInfo={userInfo} imageList={imageList} owner={true} Private={1}/>
+                :
+                <div className="verification">
                 <p className="msgField" id="messageField"></p>
-                { isSignedIn && <div id='mygallery'>
+                { isSignedIn ?
                     <div id="splPassword" >
                         <p>This album is password protected</p>
-                        { splPass && <form>
+                        { splPass ?
+                            <form>
                             <fieldset>
                                 <legend>Enter album password</legend>
                                 <input type='password' placeholder="Album Password" id="splPass"/>
                             </fieldset>
                             <p>Forgot password? <span onClick={() => window.location = '/forgotPassword&spl'} style={{color: 'blue', cursor: 'pointer'}}>Click here</span></p>
                             <button type="button" onClick={()=>verify()}>Verify</button>
-                        </form>}
-                        { !splPass && <form style={{ display: 'block' }}>
+                            </form>
+                            :
+                            <form style={{ display: 'block' }}>
                             <fieldset>
                                 <legend>Create album password</legend>
                                 <input type='password' placeholder="Album Password" id="splPass"/>
                                 <input type="password" placeholder='Confirm Password' id="confirmSplPass"/>
                             </fieldset>                        
                             <button type="button" onClick={()=>createSplPass()}>Create Password</button>
-                        </form>}
+                            </form>
+                        }
                     </div>
-                </div>}
-                { !isSignedIn && <div className="SignIn" style={{ textAlign: 'center' }}>
-                    <p>Sign In to View this page</p>
-                    <Authentication/>
-                </div>}
-            </div>}
-            { verified && <AlbumView authCred={authCred} imageList={imageList} owner={true} Private={1}/> }
+                    :
+                    <div className="SignIn" style={{ textAlign: 'center' }}>
+                        <p>Sign In to View this page</p>
+                        <Authentication/>
+                    </div>
+                }
+                </div>
+            }
         </div>
     );
 }

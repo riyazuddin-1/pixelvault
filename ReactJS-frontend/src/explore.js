@@ -3,9 +3,9 @@ import { useParams } from 'react-router-dom';
 import AlbumView from './albumView';
 
 const Explore = () => {
-    var { Category } = useParams();
     var [imageList, setImageList] = useState(null);
     var [isLoading, setLoading] = useState(null);
+    var { Category } = useParams();
     var categories = [
         'nature',
         'abstract',

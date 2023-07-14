@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
-import AlbumView from "./albumView";
 import { useEffect, useState } from "react";
+import AlbumView from "./albumView";
 var cryptoJS = require('crypto-js');
 
 const Profile = ({authCred, isSignedIn}) => {
@@ -8,11 +8,11 @@ const Profile = ({authCred, isSignedIn}) => {
     var [imageList, setImageList] = useState(null);
     var [isLoading, setLoading] = useState(null);
     var owner = false;
+    var userInfo;
     if(isSignedIn) {
-        var bytes = cryptoJS.AES.decrypt(authCred, 'GiveMeJob');
-        authCred = bytes.toString(cryptoJS.enc.Utf8);
-        authCred = JSON.parse(authCred);
-        if(authCred['uid'] == userID) {
+        var bytesString = cryptoJS.AES.decrypt(authCred, 'GiveMeJob').toString(cryptoJS.enc.Utf8);
+        userInfo = JSON.parse(bytesString);
+        if(userInfo['uid'] == userID) {
             owner = true;
         }
     }
@@ -37,7 +37,7 @@ const Profile = ({authCred, isSignedIn}) => {
     }, [])
     return ( 
         <div>
-            { isLoading && <AlbumView authCred={authCred} imageList={imageList} Private={0} owner={owner}/>}
+            { isLoading && <AlbumView userInfo={userInfo} imageList={imageList} Private={0} owner={owner}/>}
             { !isLoading && <p>Loading...</p> }
         </div>
      );

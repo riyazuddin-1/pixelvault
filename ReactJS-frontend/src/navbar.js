@@ -4,10 +4,9 @@ var cryptoJS = require('crypto-js');
 const Navbar = ({funcAuthCred, authCred, isSignedIn}) => {
     var appear = true;
     if (isSignedIn) {
-        var bytes = cryptoJS.AES.decrypt(authCred, 'GiveMeJob');
-        authCred = bytes.toString(cryptoJS.enc.Utf8);
-        authCred = JSON.parse(authCred);
-        var myProfile = '/u/'+authCred['uid'];
+        var bytesString = cryptoJS.AES.decrypt(authCred, 'GiveMeJob').toString(cryptoJS.enc.Utf8);
+        var userInfo = JSON.parse(bytesString);
+        var myProfile = '/u/'+ userInfo['uid'];
     }
     function toggle() {
         if(appear) {

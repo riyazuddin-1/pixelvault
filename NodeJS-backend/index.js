@@ -59,15 +59,16 @@ app.post('/login', async (req, res) => {
 })
 
 app.post('/register', async (req, res) => {
-    fullname = req.body.name;
+    fullname = req.body.fullname;
     username = req.body.uid;
     mailID = req.body.mailID;
     password = req.body.password;
     const db = client.db('Tasvir');
     const collection = db.collection('users');
+    const query = {Name: fullname, uid: username, mailID: mailID, password: hash , splPass: ''};
     bcrypt.hash(password, 10).then( async (hash) => {
-        await collection.insertOne({name: fullname, uid: username, mailID: mailID, password: hash , splPass: ''});
-        res.status(200).json({name: fullname, id: username}).send();
+        await collection.insertOne(query);
+        res.status(200).json(query).send();
     })
 })
 

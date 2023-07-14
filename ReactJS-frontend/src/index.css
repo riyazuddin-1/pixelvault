@@ -90,12 +90,10 @@ input {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100%;
-  min-width: 250px;
-  max-width: 800px;
+  width: 100vw;
+  max-width: 500px;
   padding: 20px;
   background-color: white;
-  width: fit-content;
   z-index: 3;
 }
 .popup button {
@@ -194,7 +192,6 @@ button {
 }
 .images img{
   width: 100%;
-  /* margin-bottom: 10px; */
 }
 .card {
   position: relative;
@@ -214,7 +211,6 @@ button {
 }
 #uploadpopup {
   display: none;
-  position: relative;
   z-index: 2;
 }
 #categorySelect li {
