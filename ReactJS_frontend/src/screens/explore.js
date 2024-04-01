@@ -1,11 +1,13 @@
 import { useEffect,useState } from 'react';
 import { useParams } from 'react-router-dom';
-import AlbumView from './albumView';
+import AlbumView from '../components/albumView';
+import config from '../config.json';
 
 const Explore = () => {
     var [imageList, setImageList] = useState(null);
     var [isLoading, setLoading] = useState(null);
     var { Category } = useParams();
+    console.log(Category);
     var categories = [
         'nature',
         'abstract',
@@ -27,7 +29,7 @@ const Explore = () => {
     }
     useEffect(() => {
         async function fetchImages() {
-            var response = await fetch('https://tasvir-backend.vercel.app/exploreImages', {
+            var response = await fetch(config.backend_server + '/images/explore-images', {
                 method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -44,15 +46,15 @@ const Explore = () => {
         }
         fetchImages();
     }, [])
-    return ( 
-        <div>
+    return (
+        <div className='flex-column'>
             <div className="content explore">
                 <h2>Categories</h2>
-                <ul id="categoryList">
+                <div id="categoryList">
                     { categories.map((category, i) => (
-                        <li onClick={()=> goto(category)} key={i}>{category}</li>
+                        <div className={"categoryCard gradientbg" + (i)%6} onClick={()=> goto(category)} key={i}>{category}</div>
                     )) }
-                </ul>
+                </div>
             </div>
             <div className='content'>
                 { isLoading && <div>
