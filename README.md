@@ -1,45 +1,67 @@
-# Tasvir - Image Gallery application built with MERN stack
-A fullstack application built with MERN stack to upload, explore and download images based on the category provided.
-Developed user authentication from scratch.
-Features include category based image filter, password-protected folder to authorized users.
+# PixelVault - Image Gallery Application Built with the MERN Stack
 
-## How to run the application
-The application is deployed on vercel. [click here](https://tasvir.vercel.app)
+PixelVault is a user-friendly platform where creators, photographers, and designers can showcase their artwork, connect with a global community, and control the visibility of their images. It allows users to easily upload and manage their creations, engage with fellow artists, and discover new inspiration from around the world. Whether sharing public or private pieces, the platform provides a simple way to build and share your creative journey.
 
-To execute the code in the repo, follow the steps given below
+## How to Run the Application
 
-### Backend 
-1. Move to `NodeJS_backend` folder\
+The application is deployed on Vercel. [Click here](https://pixelvault.vercel.app) to access the live app.
 
-2. create a `.env` file and define the following elements\
->PORT = 4444\
->ORIGIN = https://localhost:3000\
->DATABASE_URL = mongodb_uri\
->MAILER_HOST = specify mail host for nodemailer\
->MAILER_UID = mail id\
->MAILER_PASS = password to authorize mail id at nodemailer\
->
->CLOUDINARY_CLOUD_NAME = cloudinary cloud name\
->CLOUDINARY_API_KEY = cloudinary api key\
->CLOUDINARY_API_SECRET = cloudinary api secret key
+To execute the code locally, follow the steps below:
 
-3. Download the dependencies with `npm i` command
+### Backend
+1. Navigate to the `NodeJS_backend` folder.
 
-4. Once the dependencies are downloaded, run the backend application with `node .` command
+2. Create a `.env` file and define the following environment variables:
+
+    ```
+    PORT = 4444
+    ORIGIN = https://localhost:3000
+    DATABASE_URL = <mongodb_uri>
+    MAILER_HOST = <specify mail host for nodemailer>
+    MAILER_UID = <mail id>
+    MAILER_PASS = <password to authorize mail id at nodemailer>
+    
+    CLOUDINARY_CLOUD_NAME = <cloudinary cloud name>
+    CLOUDINARY_API_KEY = <cloudinary api key>
+    CLOUDINARY_API_SECRET = <cloudinary api secret key>
+    ```
+
+3. Install the dependencies by running the command:
+
+    ```
+    npm install
+    ```
+
+4. Once the dependencies are installed, start the backend server using:
+
+    ```
+    node .
+    ```
 
 ### Frontend
-1. Move to `ReactJS_backend` folder\
+1. Navigate to the `ReactJS_frontend` folder.
 
-2. create a `config.json` file in the `src` folder and define the following elements
-```
-{
-    "backend_server": "http://localhost:4444" 
-}
-```
+2. Create a `config.json` file in the `src` folder and define the following:
 
-3. Download the dependencies with `npm i` command
+    ```json
+    {
+        "backend_server": "http://localhost:4444"
+    }
+    ```
 
-4. Once the dependencies are downloaded, run the backend application with `npm start` command
+3. Install the dependencies by running:
+
+    ```
+    npm install
+    ```
+
+4. Once the dependencies are installed, run the frontend application with:
+
+    ```
+    npm start
+    ```
 
 ## Support
-For any kind of queries, issues, feedbacks or inquiries, contact to md.riyazuddin.dev@gmail.com
+
+For any queries, issues, feedback, or inquiries, contact:  
+[md.riyazuddin.dev@gmail.com](mailto:md.riyazuddin.dev@gmail.com)
