@@ -16,7 +16,11 @@ To execute the code locally, follow the steps below:
     ```
     PORT = 4444
     ORIGIN = https://localhost:3000
+
+    SECRET_KEY = <random value>
+
     DATABASE_URL = <mongodb_uri>
+
     MAILER_HOST = <specify mail host for nodemailer>
     MAILER_UID = <mail id>
     MAILER_PASS = <password to authorize mail id at nodemailer>
