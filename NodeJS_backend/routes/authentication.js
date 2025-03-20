@@ -7,14 +7,16 @@ app.post('/login', controllers.login);
 
 app.post('/register', controllers.register);
 
-app.post('/user-details', controllers.getUserDetails);
+app.post('/profile', controllers.getUserDetails);
+
+app.post('/update-profile', controllers.updateUserDetails);
 
 app.post('/check-username', controllers.checkUsername);
 
-app.post('/change-password', controllers.changePassword);
+app.post('/update-password', controllers.updatePassword);
 
-app.post('/create-special-password', controllers.createSpecialPassword);
+app.post('/verify-email', controllers.verifyEmail);
 
-app.post('/check-special-password', controllers.checkSpecialPassword);
+app.post('/verify-otp', controllers.verityOtp);
 
 module.exports = app;

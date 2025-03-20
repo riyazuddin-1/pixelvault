@@ -1,20 +1,25 @@
-const { MongoClient } = require('mongodb');
+const mongoose = require('mongoose');
 
-var uri = process.env.DATABASE_URL;
+let uri = process.env.DATABASE_URL;
 
-const client = new MongoClient(uri);
-client.connect().then(() => {
+mongoose.connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
+
+const db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.once('open', () => {
     console.log('Connected successfully to server');
-}).catch(e => {
-  console.log(e);
-})
+});
 
-const db = client.db('Tasvir_v2');
-
-// Collection names in MongoDB
+// Collection names
 const collections = {
     'users': 'users',
-    'images': 'images'
+    'images': 'images',
+    'temporary': 'temporary',
+    'likes': 'likes'
 }
 
-module.exports = { db, collections };
+module.exports = { mongoose, collections };

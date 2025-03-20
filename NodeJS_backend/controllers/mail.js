@@ -1,9 +1,6 @@
 const nodemailer = require('nodemailer');
 
-const {db, collections } = require('../database');
-const collectionName = collections.users;
-
-var transporter = nodemailer.createTransport({
+let transporter = nodemailer.createTransport({
     service: 'gmail',
     host: process.env.MAILER_HOST,
     port: 465,
@@ -14,33 +11,26 @@ var transporter = nodemailer.createTransport({
     }
 })
 
-const mailControllers = {};
+const mailHandler = {};
 
-mailControllers.sendEmail = async (req, res) => {
-    mail = req.body.email;
-    otp = req.body.otp;
-    console.log(mail, otp);
-    var result = await db.collection(collectionName).findOne({ mailID: mail });
-    console.log(result);
-    if(!result) {
-        res.status(300).send('The email is not registered');
-    } else {
-        console.log('found');
-        var mailOptions = {
+mailHandler.sendEmail = async (res, email, subject, content) => {
+    if(!email || !subject) return res.status(400).send("Missing important fields");
+    try {
+        let mailOptions = {
             from: process.env.MAILER_UID,
-            to: mail,
-            subject: 'OTP for password change',
-            html: `<p>Hello User!!!</p><p>Your One Time Password for password change is..</p><h4>${otp}</h4>`
+            to: email,
+            subject: subject,
+            html: content
         }
+        
         transporter.sendMail(mailOptions, (error, info)=> {
             if (error) {
-                console.log(error);
-                res.status(300).send();
-              } else {
-                res.status(200).send();
-              }
+              return res.status(400).send("Error sending email");
+            }
         })
+    } catch(e) {
+        res.status(500).send("Internal server error");
     }
 }
 
-module.exports = mailControllers;
+module.exports = mailHandler;

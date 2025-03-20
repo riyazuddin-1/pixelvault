@@ -1,41 +1,68 @@
-var cryptoJS = require('crypto-js');
-const config = require('./config.json');
-
-const utilities = {}
-
-utilities.getAuthCredentials = () => {
-    const authCred = sessionStorage.getItem('Credentials');
-    var bytesString = cryptoJS.AES.decrypt(authCred, config.encryption_key).toString(cryptoJS.enc.Utf8);
-    return JSON.parse(bytesString);
+export const names = {
+    user: 'user',
+    token: 'access_token'
 }
 
-utilities.setAuthCredentials = (data) => {
-    sessionStorage.setItem('Credentials', cryptoJS.AES.encrypt(JSON.stringify(data), config.encryption_key).toString());
+export const getAuthCredentials = () => {
+    return isSignedIn ? JSON.parse(localStorage.getItem('user')) : { uid: null };
+};
+
+export const setAuthCredentials = (data) => {
+    if (data && Object.keys(data).length) {
+        localStorage.setItem('user', JSON.stringify(data));
+    }
+};
+
+export const getStorage = (name) => {
+    return localStorage.getItem(name) ?? null;
+}
+
+export const setStorage = (name, value) => {
+    localStorage.setItem(name, value);
+}
+
+export const isSignedIn = Boolean(getStorage('user')) && Boolean(getStorage('access_token'));
+
+export const credentials = isSignedIn ? JSON.parse(getStorage('user')) : {};
+
+export const logout = () => {
+    localStorage.removeItem(names.user);
+    localStorage.removeItem(names.token);
     window.location.reload();
 }
 
-utilities.isSignedIn = sessionStorage.getItem('Credentials') ? true : false;
+export const showMessage = (message, type = "info", duration = 12000) => {
+    const messageContainer = document.querySelector(".message-container") || document.createElement('div');
+    messageContainer.classList.add("message-container");
+    document.body.appendChild(messageContainer);
 
-utilities.showMessage = (message) => {
-    const msgField = document.getElementById('messageField');
-    msgField.style.display = 'block';
-    msgField.innerHTML = message;
-    setTimeout(()=>{
-        msgField.style.display = 'none';
-    }, 10000)
-}
+    const messageBlock = document.createElement('div');
+    messageBlock.classList.add("message-block", type);
 
-utilities.generateOTP = () => {
-    var digits = '0123456789';
-    var OTP = '';
-    for (let i = 0; i < 6; i++ ) {
-        OTP += digits[Math.floor(Math.random() * 10)];
-    }
-    return OTP;
-}
+    const messageField = document.createElement('p');
+    messageField.textContent = message;
 
-utilities.verifyOtp = (otp, val) => {
-    return otp.length ? otp==val : false;
-}
+    const closeMessage = document.createElement('button');
+    closeMessage.classList.add('btn-small');
+    closeMessage.textContent = "×";
+    closeMessage.addEventListener('click', () => messageBlock.remove());
 
-module.exports = utilities;
+    messageBlock.appendChild(messageField);
+    messageBlock.appendChild(closeMessage);
+    messageContainer.appendChild(messageBlock);
+
+    setTimeout(() => messageBlock.remove(), duration);
+};
+
+export const colors = [
+    "black", "white", "red", "green", "blue", "yellow", "orange", "purple", "pink", "brown",
+    "cyan", "gray", "skyblue", "lime", "teal", "navy", "olive", "silver", "maroon", "gold",
+    "turquoise", "lavender", "peach"
+];
+
+export const categories = [
+    "abstract", "vibrant", "aesthetic", "realism", "surrealism", "food", "minimal", "modern",
+    "art", "digitalart", "streetart", "meme", "handwork", "sketches", "photography", "painting",
+    "illustration", "portrait", "substance", "people", "crowd", "cinema", "fiction", "fantasy",
+    "designing", "collage", "3d", "anime", "nature", "landscapes", "technology"
+];

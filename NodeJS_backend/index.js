@@ -7,10 +7,16 @@ require('dotenv').config();
 
 const app = express();
 
+app.use(cors({
+    origin: process.env.ORIGIN,
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    methods: ['GET', 'POST', 'OPTIONS'],
+    preflightContinue: false,
+}));
+
 app.use(fileUpload());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true }));
-app.use(cors({origin: process.env.ORIGIN}));
 
 const routes = require('./routes');
 app.use('/', routes);
